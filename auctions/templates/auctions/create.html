@@ -4,7 +4,29 @@
     <h1>Create Listing</h1>
     <form action="{% url 'create' %}" method="POST">
         {% csrf_token %}
-        {{ form.as_p }}
+        <!-- {{ form.as_p }} -->
+        <p>
+            {{ form.title.label_tag }}              <!-- <label for="">Title: </label> -->
+            {{ form.title }}
+        </p>
+        <p>
+            {{ form.description.label_tag }}  <!-- <label for="">Description: </label> -->
+            {{ form.description }}
+        </p>
+        <p>
+            
+            {{ form.starting_bid.label_tag }}  <!-- <label for="">Starting Bid: </label> -->
+            {{ form.starting_bid }}
+        </p>
+        <p>
+            {{ form.img_url.label_tag }}  <!-- <label for="">Image URL: </label> -->
+            {{ form.img_url }}
+        </p>
+        <p>
+            {{ form.category.label_tag }}
+            {{ form.category }}
+        </p>
+        
         <input type="submit" value="Submit">
         <!-- <div>
             <input type="text" name="title" palceholder="Listing Title">

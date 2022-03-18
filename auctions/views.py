@@ -66,6 +66,10 @@ def register(request):
 
 def create(request):
     form = AddListingItemForm()
+    if request.method == "POST":
+        if form.is_valid():
+            pass
+
     return render(request, "auctions/create.html", {
         "form": form
     })

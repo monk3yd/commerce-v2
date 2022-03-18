@@ -2,18 +2,18 @@ from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.forms import ModelForm
 
-# category_choices = (
-#     ('default', '...')
-#     ('electronics', 'Electronics'),
-#     ('home', 'Home'),
-#     ('toys', "Toys"),
-#     ('fashion', "Fashion")
-# )
-
 
 # MODELS
 class User(AbstractUser):
     pass
+
+
+category_choices = [
+    ('electronics', 'Electronics'),
+    ('home', 'Home'),
+    ('toys', "Toys"),
+    ('fashion', "Fashion")
+]
 
 
 # Auction Listings
@@ -23,7 +23,7 @@ class ListingItem(models.Model):
     starting_bid = models.FloatField()
 
     img_url = models.URLField()  # models.ImageField()
-    # category = models.CharField(choices=category_choices, default=default)
+    category = models.CharField(max_length=50, choices=category_choices)
 
     def __str__(self):
         return f"List Item: {self.title}"
@@ -46,4 +46,15 @@ class ListingItem(models.Model):
 class AddListingItemForm(ModelForm):
     class Meta:
         model = ListingItem
-        fields = ['title', 'description', 'starting_bid', 'img_url']
+        fields = ['title', 'description', 'starting_bid', 'img_url', 'category']  # fields = '__all__'
+        labels = {
+            # Name of field : label Text
+            'title': 'Title',
+            'description': 'Description',
+            'starting_bid': 'Starting Bid',
+            'img_url': 'Image URL',
+            'category': 'Category'
+        }
+        # field_classes = {
+        #     'title': 
+        # }
