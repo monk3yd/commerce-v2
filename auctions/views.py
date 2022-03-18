@@ -4,7 +4,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 
-from .models import User, ListingItem, AddListingItemForm
+from .models import User, ListingItem, AddListingItemForm, WatchList
 # from .forms import AddListingItemForm
 
 from datetime import datetime as dt
@@ -81,10 +81,15 @@ def create(request):
             img_url = form.cleaned_data['img_url']
             category = form.cleaned_data['category']
 
+            # Get datetime of listing
             now = dt.now()
 
+            # Get id of user who make request
             uid = request.user.id
+            # Get user object by id
             user = User.objects.get(pk=uid)
+
+            # Create new Listing Item
             item = ListingItem(
                 title=title,
                 description=description,
@@ -94,9 +99,11 @@ def create(request):
                 starting_date=now,
                 author=user
             )
+            # Save new Listing Item
             item.save()
             return HttpResponseRedirect(reverse("index"))
 
+    # Create form object and pass it to html
     form = AddListingItemForm()
 
     return render(request, "auctions/create.html", {
@@ -104,9 +111,37 @@ def create(request):
     })
 
 
-def item(request, uid):
-    # TODO - Get Item
-    item = ListingItem.objects.get(id=uid)
+def item(request, item_uid):
+    # - Get Item
+    item = ListingItem.objects.get(id=item_uid)
     return render(request, "auctions/item.html", {
         "item": item
     })
+
+
+def watchlist(request):
+    if request.method == "POST":
+        uid = request.user.id
+        user = User.objects.get(pk=uid)
+        item = ListingItem.objects.get(author=user)
+
+        watch_item = WatchList(user=user, item=item)
+        watch_item.save()
+        return HttpResponseRedirect(reverse('watchlist'))
+    # Get all watchlist items with that belongs to actual user
+    watchlist = WatchList.objects.all()
+    return render(request, "auctions/watchlist.html", {
+        "watchlist": watchlist
+    })
+
+
+# Remove item from watchlist
+def remove(request):
+    uid = request.user.id
+    print(uid)
+    user = User.objects.get(pk=uid)
+    print(user)
+    item = ListingItem.objects.get(author=user)
+    print(item)
+    WatchList.objects.filter(item=item).delete()
+    return HttpResponseRedirect(reverse("watchlist"))

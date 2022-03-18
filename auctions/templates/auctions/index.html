@@ -6,13 +6,14 @@
         <div class="row align-items-start m-4" style="border: 1px solid rgb(219, 216, 216);">
             <div class="col">
                 <a href="{% url 'item' listing.id %}">
-                    <img src="{{ listing.img_url }}" alt="{{ listing.title }}-image" height="250" width="600">
+                    <img src="{{ listing.img_url }}" alt="{{ listing.title }}-image" height="200" width="640">
                 </a>             
             </div>
             <div class="col">
                 <h3>{{ listing.title }}</h3>
                 <h4>Price: ${{ listing.starting_bid }}</h4>
                 <h5>{{ listing.description }}</h5>
+                <!-- # TODO - Format Datetime Field -->
                 <p>Created Feb 22, 2021</p>
             </div>
         </div>
