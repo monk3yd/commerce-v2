@@ -1,7 +1,7 @@
 from django import forms
 
 
-class AddListingForm(forms.Form):
+class AddListingItemForm(forms.Form):
     title = forms.CharField(label="Item Title")
     description = forms.CharField(label="Item Description")
     starting_bid = forms.DecimalField(decimal_places=2)

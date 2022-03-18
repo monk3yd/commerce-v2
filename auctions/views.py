@@ -4,8 +4,8 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 
-from .models import User, ListItem
-from .forms import AddListingForm
+from .models import User, ListingItem, AddListingItemForm
+# from .forms import AddListingItemForm
 
 
 def index(request):
@@ -65,7 +65,7 @@ def register(request):
 
 
 def create(request):
-    form = AddListingForm()
+    form = AddListingItemForm()
     return render(request, "auctions/create.html", {
         "form": form
     })

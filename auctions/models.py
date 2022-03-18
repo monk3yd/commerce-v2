@@ -1,10 +1,6 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
-
-
-class User(AbstractUser):
-    pass
-
+from django.forms import ModelForm
 
 # category_choices = (
 #     ('default', '...')
@@ -14,8 +10,14 @@ class User(AbstractUser):
 #     ('fashion', "Fashion")
 # )
 
+
+# MODELS
+class User(AbstractUser):
+    pass
+
+
 # Auction Listings
-class ListItem(models.Model):
+class ListingItem(models.Model):
     title = models.CharField(max_length=50)
     description = models.CharField(max_length=250)
     starting_bid = models.FloatField()
@@ -40,3 +42,8 @@ class ListItem(models.Model):
 #     author = models.CharField()  # ForeigKey to User
 #     date = models.
 
+# FORMS
+class AddListingItemForm(ModelForm):
+    class Meta:
+        model = ListingItem
+        fields = ['title', 'description', 'starting_bid', 'img_url']
