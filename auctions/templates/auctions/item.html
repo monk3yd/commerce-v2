@@ -1,0 +1,18 @@
+{% extends 'auctions/layout.html' %}
+
+{% block body %}
+    <h1>Listing: {{ item.title }}</h1>
+    <img src="{{ item.img_url }}" alt="{{item.title}}-image" width="700">
+    <h6>{{ item.description }}</h6>
+    <!-- # TODO - This needs to be the actual/current bid/price. Get from Bids Model -->
+    <h2>${{ item.starting_bid }}</h2>
+    <!-- # TODO - Message: 2 bids so far. Your bid is the current bid -->
+    <!-- # TODO - Input for placing bid. Make Model and Form from it. 
+    Include the Place Bid submit button -->
+
+    <!-- # TODO - List details as author of listing, category, etc -->
+    <h3>Details</h3>
+    <ul>
+        <li>Listed by: <a href="#">{{ item.author }}</a></li>
+    </ul>
+{% endblock %}

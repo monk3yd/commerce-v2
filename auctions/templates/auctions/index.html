@@ -2,6 +2,20 @@
 
 {% block body %}
     <h2>Active Listings</h2>
-
-    TODO
+    {% for listing in listings %}
+        <div class="row align-items-start m-4" style="border: 1px solid rgb(219, 216, 216);">
+            <div class="col">
+                <a href="{% url 'item' listing.id %}">
+                    <img src="{{ listing.img_url }}" alt="{{ listing.title }}-image" height="250" width="600">
+                </a>             
+            </div>
+            <div class="col">
+                <h3>{{ listing.title }}</h3>
+                <h4>Price: ${{ listing.starting_bid }}</h4>
+                <h5>{{ listing.description }}</h5>
+                <p>Created Feb 22, 2021</p>
+            </div>
+        </div>
+    {% endfor %}
+    
 {% endblock %}

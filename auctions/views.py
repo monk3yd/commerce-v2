@@ -7,9 +7,15 @@ from django.urls import reverse
 from .models import User, ListingItem, AddListingItemForm
 # from .forms import AddListingItemForm
 
+from datetime import datetime as dt
+
 
 def index(request):
-    return render(request, "auctions/index.html")
+    # - Query database for all listings
+    listings = ListingItem.objects.all()
+    return render(request, "auctions/index.html", {
+        'listings': listings
+    })
 
 
 def login_view(request):
@@ -65,11 +71,42 @@ def register(request):
 
 
 def create(request):
-    form = AddListingItemForm()
     if request.method == "POST":
+        form = AddListingItemForm(request.POST)
         if form.is_valid():
-            pass
+            # - Add new Listing to database
+            title = form.cleaned_data['title']
+            description = form.cleaned_data['description']
+            starting_bid = form.cleaned_data['starting_bid']
+            img_url = form.cleaned_data['img_url']
+            category = form.cleaned_data['category']
+
+            now = dt.now()
+
+            uid = request.user.id
+            user = User.objects.get(pk=uid)
+            item = ListingItem(
+                title=title,
+                description=description,
+                starting_bid=starting_bid,
+                img_url=img_url,
+                category=category,
+                starting_date=now,
+                author=user
+            )
+            item.save()
+            return HttpResponseRedirect(reverse("index"))
+
+    form = AddListingItemForm()
 
     return render(request, "auctions/create.html", {
         "form": form
+    })
+
+
+def item(request, uid):
+    # TODO - Get Item
+    item = ListingItem.objects.get(id=uid)
+    return render(request, "auctions/item.html", {
+        "item": item
     })

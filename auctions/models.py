@@ -1,6 +1,11 @@
+from django.conf import settings
 from django.contrib.auth.models import AbstractUser
+from django.contrib.sessions.models import Session
 from django.db import models
 from django.forms import ModelForm
+
+
+from datetime import datetime as dt
 
 
 # MODELS
@@ -18,22 +23,35 @@ category_choices = [
 
 # Auction Listings
 class ListingItem(models.Model):
+    # Form
     title = models.CharField(max_length=50)
     description = models.CharField(max_length=250)
     starting_bid = models.FloatField()
-
-    img_url = models.URLField()  # models.ImageField()
+    img_url = models.URLField(blank=True)  # models.ImageField()
     category = models.CharField(max_length=50, choices=category_choices)
 
+    # Auto-generated when submitted
+    starting_date = models.DateTimeField(auto_now=True)
+    author = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+    )  # ForeigKey to User.
+
+    # Variable keeps track of current highest bid
+    # highest_bid = models.FloatField()
+
     def __str__(self):
-        return f"List Item: {self.title}"
+        return f"{self.title}"
 
 
-# Bids
-# class Bid(model.Models):
-#     bid =
-#     author = 
-#     date =
+# TODO - Bids
+# class Bid(models.Model):
+#     bid = models.FloatField()
+#     author = models.ForeignKey(
+#         'User',
+#         on_delete=models.CASCADE,
+#     ) # ForeigKey to User
+#     date = models.DateTimeField()
 
 
 # Comments on auction listings
@@ -46,7 +64,14 @@ class ListingItem(models.Model):
 class AddListingItemForm(ModelForm):
     class Meta:
         model = ListingItem
-        fields = ['title', 'description', 'starting_bid', 'img_url', 'category']  # fields = '__all__'
+        fields = [  # fields = '__all__'
+            'title',
+            'description',
+            'starting_bid',
+            'img_url',
+            'category'
+        ]
+
         labels = {
             # Name of field : label Text
             'title': 'Title',
