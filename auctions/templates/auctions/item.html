@@ -4,9 +4,10 @@
     <h1>Listing: {{ item.title }}</h1>
     {% if user.is_authenticated %}
         <!-- # Watchlist Add button -->
-        <form action="{% url 'watchlist' %}" method="POST">
+        <form action="{% url 'item' item.id %}" method="POST">
             {% csrf_token %}
             <!-- # item.id or item.author -->
+            <!-- <input type="hidden" name="item_id" value="{{ item.id }}"> -->
             <input name="submit-to-watchlist" type="submit" value="Add to Watchlist">
         </form>
     {% endif %}

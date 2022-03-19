@@ -75,6 +75,9 @@ class WatchList(models.Model):
         on_delete=models.CASCADE,
     )  # ForeigKey to ListingItem
 
+    class Meta:
+        unique_together = ('user', 'item')
+
     def __str__(self):
         return f"{self.item.title}"
 

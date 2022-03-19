@@ -114,21 +114,42 @@ def create(request):
 def item(request, item_uid):
     # - Get Item
     item = ListingItem.objects.get(id=item_uid)
+    print(item.description)  # object access with .
+
+    # Add Item to Watchlist
+    if request.method == "POST":
+        # Get user id and User object
+        uid = request.user.id
+        user = User.objects.get(pk=uid)
+
+        # Get item object with item uid, trying to be saved
+        # item = ListingItem.objects.get(id=item_uid)
+        print(item.description)
+
+        # Get user watchlist
+        # watchlist = WatchList.objects.all()
+        # print(watchlist)
+
+        # Check if item is within users watchlist
+        # for _ in watchlist:
+        #     print(_.id)
+        
+        # if item not in watchlist:
+        # Create & Save item to users watchlist
+        watch_item = WatchList(user=user, item=item)
+        watch_item.save()
+        # else:
+        #     print("Item already in watchlist.")
+
+        return HttpResponseRedirect(reverse('watchlist'))
+
     return render(request, "auctions/item.html", {
         "item": item
     })
 
 
 def watchlist(request):
-    if request.method == "POST":
-        uid = request.user.id
-        user = User.objects.get(pk=uid)
-        item = ListingItem.objects.get(author=user)
-
-        watch_item = WatchList(user=user, item=item)
-        watch_item.save()
-        return HttpResponseRedirect(reverse('watchlist'))
-    # Get all watchlist items with that belongs to actual user
+    # Get all watchlist items that belongs to actual user
     watchlist = WatchList.objects.all()
     return render(request, "auctions/watchlist.html", {
         "watchlist": watchlist
@@ -136,12 +157,11 @@ def watchlist(request):
 
 
 # Remove item from watchlist
-def remove(request):
-    uid = request.user.id
-    print(uid)
-    user = User.objects.get(pk=uid)
-    print(user)
-    item = ListingItem.objects.get(author=user)
+def remove(request, item_uid):
+    # Get item object with uid
+    item = ListingItem.objects.get(id=item_uid)
     print(item)
+
+    # Remove object from watchlist
     WatchList.objects.filter(item=item).delete()
     return HttpResponseRedirect(reverse("watchlist"))
