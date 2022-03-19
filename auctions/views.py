@@ -135,9 +135,15 @@ def item(request, item_uid):
         #     print(_.id)
         
         # if item not in watchlist:
-        # Create & Save item to users watchlist
-        watch_item = WatchList(user=user, item=item)
-        watch_item.save()
+        try:
+            # Create & Save item to users watchlist
+            watch_item = WatchList(user=user, item=item)
+            watch_item.save()
+        except IntegrityError:
+            return HttpResponseRedirect(reverse('watchlist'))
+            # return render(request, "auctions/item.html", {
+            #     "message": "This item already exists in your watchlist.."
+            # })
         # else:
         #     print("Item already in watchlist.")
 
