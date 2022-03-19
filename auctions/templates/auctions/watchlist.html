@@ -10,6 +10,8 @@
             <!-- # https://stackoverflow.com/questions/13092268/how-do-you-join-two-tables-on-a-foreign-key-field-using-django-orm -->
             <!-- {{ element.item.title}}   -->
         </li>
+        {% empty %}
+            <li><span>There are no items in watchlist.</span></li>
         {% endfor %}
     </ul>
 {% endblock %}

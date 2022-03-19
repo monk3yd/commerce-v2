@@ -1,3 +1,4 @@
+from django.core.exceptions import MultipleObjectsReturned
 from django.contrib.auth import authenticate, login, logout
 from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect
@@ -114,7 +115,7 @@ def create(request):
 def item(request, item_uid):
     # - Get Item
     item = ListingItem.objects.get(id=item_uid)
-    print(item.description)  # object access with .
+    # print(item.description)  # object access with .
 
     # Add Item to Watchlist
     if request.method == "POST":
@@ -124,7 +125,7 @@ def item(request, item_uid):
 
         # Get item object with item uid, trying to be saved
         # item = ListingItem.objects.get(id=item_uid)
-        print(item.description)
+        # print(item.description)
 
         # Get user watchlist
         # watchlist = WatchList.objects.all()
@@ -133,7 +134,7 @@ def item(request, item_uid):
         # Check if item is within users watchlist
         # for _ in watchlist:
         #     print(_.id)
-        
+
         # if item not in watchlist:
         try:
             # Create & Save item to users watchlist
@@ -164,10 +165,21 @@ def watchlist(request):
 
 # Remove item from watchlist
 def remove(request, item_uid):
-    # Get item object with uid
-    item = ListingItem.objects.get(id=item_uid)
-    print(item)
+    user_uid = request.user.id
+    user = User.objects.get(pk=user_uid)
+    # item = ListingItem.objects.get(id=item_uid)
+    try:
+        # Get item deleted form watchlist
+        watchlist = WatchList.objects.get(user=user)
+        print(type(watchlist))
+        print(watchlist.id)
 
-    # Remove object from watchlist
-    WatchList.objects.filter(item=item).delete()
-    return HttpResponseRedirect(reverse("watchlist"))
+        # Remove object from watchlist
+        WatchList.objects.filter(user=user, id=watchlist.id).delete()
+    # https://stackoverflow.com/questions/32172934/how-to-catch-the-multipleobjectsreturned-error-in-django
+    except MultipleObjectsReturned:
+        # Remove object from watchlist
+        WatchList.objects.filter(user=user, id=item_uid).delete()
+    finally:
+        return HttpResponseRedirect(reverse("watchlist"))
+

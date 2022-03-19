@@ -79,7 +79,8 @@ class WatchList(models.Model):
         unique_together = ('user', 'item')
 
     def __str__(self):
-        return f"{self.item.title}"
+        return f"{self.item}"
+        # return f"User ID: {self.user}, Item ID: {self.item}"
 
 
 # FORMS
