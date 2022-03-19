@@ -168,7 +168,7 @@ def remove(request, item_uid):
     user_uid = request.user.id
     user = User.objects.get(pk=user_uid)
     # item = ListingItem.objects.get(id=item_uid)
-    try:
+    try:  # One item in watchlist
         # Get item deleted form watchlist
         watchlist = WatchList.objects.get(user=user)
         print(type(watchlist))
@@ -177,7 +177,7 @@ def remove(request, item_uid):
         # Remove object from watchlist
         WatchList.objects.filter(user=user, id=watchlist.id).delete()
     # https://stackoverflow.com/questions/32172934/how-to-catch-the-multipleobjectsreturned-error-in-django
-    except MultipleObjectsReturned:
+    except MultipleObjectsReturned:  # Multiple items in watchlist
         # Remove object from watchlist
         WatchList.objects.filter(user=user, id=item_uid).delete()
     finally:
