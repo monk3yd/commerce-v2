@@ -9,10 +9,6 @@ from datetime import datetime as dt
 
 
 # MODELS
-class User(AbstractUser):
-    pass
-
-
 category_choices = [
     ('Electronics', 'Electronics'),
     ('Home', 'Home'),
@@ -37,11 +33,19 @@ class ListingItem(models.Model):
         on_delete=models.CASCADE,
     )  # ForeigKey to User.
 
-    # Variable keeps track of current highest bid
-    # highest_bid = models.FloatField()
-
     def __str__(self):
         return f"{self.title}"
+
+
+class User(AbstractUser):
+    watchlist = models.ManyToManyField(
+        ListingItem,
+        blank=True,
+        related_name="watchlist"
+    )
+
+    def __str__(self):
+        return self.username
 
 
 # TODO - Bids
@@ -83,8 +87,11 @@ class ListingItem(models.Model):
         # return f"User ID: {self.user}, Item ID: {self.item}"
 
 
+
+
+
 # FORMS
-class AddListingItemForm(ModelForm):
+class AddListingItemForm(ModelForm):  # Model form from db Model
     class Meta:
         model = ListingItem
         fields = [  # fields = '__all__'
