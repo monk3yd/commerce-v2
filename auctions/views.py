@@ -120,22 +120,8 @@ def item(request, item_uid):
     # Add Item to Watchlist
     if request.method == "POST":
         # Get user id and User object
-        uid = request.user.id
-        user = User.objects.get(pk=uid)
+        user = User.objects.get(pk=request.user.id)
 
-        # Get item object with item uid, trying to be saved
-        # item = ListingItem.objects.get(id=item_uid)
-        # print(item.description)
-
-        # Get user watchlist
-        # watchlist = WatchList.objects.all()
-        # print(watchlist)
-
-        # Check if item is within users watchlist
-        # for _ in watchlist:
-        #     print(_.id)
-
-        # if item not in watchlist:
         try:
             # Create & Save item to users watchlist
             watch_item = WatchList(user=user, item=item)
@@ -165,8 +151,7 @@ def watchlist(request):
 
 # Remove item from watchlist
 def remove(request, item_uid):
-    user_uid = request.user.id
-    user = User.objects.get(pk=user_uid)
+    user = User.objects.get(pk=request.user.id)
     # item = ListingItem.objects.get(id=item_uid)
     try:
         # Get item deleted form watchlist
