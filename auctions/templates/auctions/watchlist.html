@@ -5,7 +5,7 @@
     <ul>
         {% for element in watchlist %}
         <li>
-            <span>{{ element }}</span>
+            <span><a href="{% url 'item' element.item.id %}">{{ element }}</a></span>
             <span><a href="{% url 'remove' element.id %}"> remove</a></span>
             <!-- # https://stackoverflow.com/questions/13092268/how-do-you-join-two-tables-on-a-foreign-key-field-using-django-orm -->
             <!-- {{ element.item.title}}   -->
