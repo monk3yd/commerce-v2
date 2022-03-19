@@ -1,4 +1,3 @@
-from django.core.exceptions import MultipleObjectsReturned
 from django.contrib.auth import authenticate, login, logout
 from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect
@@ -115,7 +114,7 @@ def create(request):
 def item(request, item_uid):
     # - Get Item
     item = ListingItem.objects.get(id=item_uid)
-    # print(item.description)  # object access with .
+    print(item.description)  # object access with .
 
     # Add Item to Watchlist
     if request.method == "POST":
@@ -125,18 +124,22 @@ def item(request, item_uid):
         # Add the item to user's watchlist
         user.watchlist.add(item)
 
-        print(user.watchlist.all())
+        # Get item object with item uid, trying to be saved
+        # item = ListingItem.objects.get(id=item_uid)
+        print(item.description)
 
 
-
-        # for item in ListingItem.objects.filter(author__username):
-        #     item.author.add()
-        # try:
-        #     # Create & Save item to users watchlist
-        #     watch_item = WatchList(user=user, item=item)
-        #     watch_item.save()
-        # except IntegrityError:
-        #     return HttpResponseRedirect(reverse('watchlist'))
+        # Check if item is within users watchlist
+        # for _ in watchlist:
+        #     print(_.id)
+        
+        # if item not in watchlist:
+        try:
+            # Create & Save item to users watchlist
+            watch_item = WatchList(user=user, item=item)
+            watch_item.save()
+        except IntegrityError:
+            return HttpResponseRedirect(reverse('watchlist'))
             # return render(request, "auctions/item.html", {
             #     "message": "This item already exists in your watchlist.."
             # })
@@ -162,21 +165,10 @@ def watchlist(request):
 
 # Remove item from watchlist
 def remove(request, item_uid):
-    user_uid = request.user.id
-    user = User.objects.get(pk=request.user.id)
-    # item = ListingItem.objects.get(id=item_uid)
-    try:  # One item in watchlist
-        # Get item deleted form watchlist
-        watchlist = WatchList.objects.get(user=user)
-        print(type(watchlist))
-        print(watchlist.id)
+    # Get item object with uid
+    item = ListingItem.objects.get(id=item_uid)
+    print(item)
 
-        # Remove object from watchlist
-        WatchList.objects.filter(user=user, id=watchlist.id).delete()
-    # https://stackoverflow.com/questions/32172934/how-to-catch-the-multipleobjectsreturned-error-in-django
-    except MultipleObjectsReturned:  # Multiple items in watchlist
-        # Remove object from watchlist
-        WatchList.objects.filter(user=user, id=item_uid).delete()
-    finally:
-        return HttpResponseRedirect(reverse("watchlist"))
-
+    # Remove object from watchlist
+    WatchList.objects.filter(item=item).delete()
+    return HttpResponseRedirect(reverse("watchlist"))

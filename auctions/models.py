@@ -86,8 +86,8 @@ class User(AbstractUser):
     #     return f"{self.item}"
         # return f"User ID: {self.user}, Item ID: {self.item}"
 
-
-
+    def __str__(self):
+        return f"{self.item.title}"
 
 
 # FORMS
