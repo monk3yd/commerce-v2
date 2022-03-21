@@ -1,6 +1,7 @@
 {% extends 'auctions/layout.html' %}
 
 {% block body %}
+{% if user.is_authenticated %}
     <h2>My Watchlist</h2>
     <ul class="watchlist-list">
         {% for element in watchlist %}
@@ -18,4 +19,5 @@
             <li><span>There are no items in watchlist.</span></li>
         {% endfor %}
     </ul>
+{% endif %}
 {% endblock %}

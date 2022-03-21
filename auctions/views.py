@@ -86,9 +86,8 @@ def create(request):
             now = dt.now()
 
             # Get id of user who make request
-            uid = request.user.id
             # Get user object by id
-            user = User.objects.get(pk=uid)
+            user = User.objects.get(pk=request.user.id)
 
             # Create new Listing Item
             item = ListingItem(
@@ -135,9 +134,12 @@ def item(request, item_uid):
         #     print("Item already in watchlist.")
 
         return HttpResponseRedirect(reverse('watchlist'))
+    # Get user
+    user = User.objects.get(pk=request.user.id)
+    print(user)
 
     # Get users watchlist
-    watchlist = WatchList.objects.all()
+    watchlist = WatchList.objects.filter(user=user, item=item)
     print(watchlist)
 
     in_watchlist = False
@@ -155,8 +157,10 @@ def item(request, item_uid):
 
 
 def watchlist(request):
+    # Get user
+    user = User.objects.get(pk=request.user.id)
     # Get all watchlist items that belongs to actual user
-    watchlist = WatchList.objects.all()
+    watchlist = WatchList.objects.filter(user=user)
     return render(request, "auctions/watchlist.html", {
         "watchlist": watchlist
     })
@@ -169,8 +173,8 @@ def remove(request, item_uid):
     try:
         # Get item deleted form watchlist
         watchlist = WatchList.objects.get(user=user)
-        print(type(watchlist))
-        print(watchlist.id)
+        # print(type(watchlist))
+        # print(watchlist.id)
 
         # Remove object from watchlist
         WatchList.objects.filter(user=user, id=watchlist.id).delete()
