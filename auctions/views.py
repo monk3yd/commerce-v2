@@ -127,20 +127,13 @@ def item(request, item_uid):
             watch_item.save()
         except IntegrityError:
             return HttpResponseRedirect(reverse('watchlist'))
-            # return render(request, "auctions/item.html", {
-            #     "message": "This item already exists in your watchlist.."
-            # })
-        # else:
-        #     print("Item already in watchlist.")
 
         return HttpResponseRedirect(reverse('watchlist'))
     # Get user
     user = User.objects.get(pk=request.user.id)
-    print(user)
 
     # Get users watchlist
     watchlist = WatchList.objects.filter(user=user, item=item)
-    print(watchlist)
 
     in_watchlist = False
     # Check every item in watchlist if matches actual item
@@ -169,19 +162,6 @@ def watchlist(request):
 # Remove item from watchlist
 def remove(request, item_uid):
     user = User.objects.get(pk=request.user.id)
-    # item = ListingItem.objects.get(id=item_uid)
-    try:
-        # Get item deleted form watchlist
-        watchlist = WatchList.objects.get(user=user)
-        # print(type(watchlist))
-        # print(watchlist.id)
-
-        # Remove object from watchlist
-        WatchList.objects.filter(user=user, id=watchlist.id).delete()
-    # https://stackoverflow.com/questions/32172934/how-to-catch-the-multipleobjectsreturned-error-in-django
-    except MultipleObjectsReturned:
-        # Remove object from watchlist
-        WatchList.objects.filter(user=user, id=item_uid).delete()
-    finally:
-        return HttpResponseRedirect(reverse("watchlist"))
-
+    item = ListingItem.objects.get(id=item_uid)
+    WatchList.objects.filter(user=user, item=item).delete()
+    return HttpResponseRedirect(reverse("watchlist"))

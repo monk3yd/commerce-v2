@@ -9,7 +9,7 @@
             <a class="watchlist-item" href="{% url 'item' element.item.id %}">
                 {{ element }}
             </a>
-            <a class="remove-badge-wrap" href="{% url 'remove' element.id %}">
+            <a class="remove-badge-wrap" href="{% url 'remove' element.item.id %}">
                 <span class="remove-badge badge bg-danger"> remove</span>
             </a>
             <!-- # https://stackoverflow.com/questions/13092268/how-do-you-join-two-tables-on-a-foreign-key-field-using-django-orm -->
