@@ -139,14 +139,14 @@ def item(request, item_uid):
     # Get users watchlist
     watchlist = WatchList.objects.all()
     print(watchlist)
+
+    in_watchlist = False
     # Check every item in watchlist if matches actual item
     for _ in watchlist:
-        if _.item == item:
+        if _.item == item:  # If they are the same means items already exists in watchlist
             in_watchlist = True
             break
         in_watchlist = False
-
-    print(in_watchlist)
 
     return render(request, "auctions/item.html", {
         "item": item,
