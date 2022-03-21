@@ -37,7 +37,8 @@ class ListingItem(models.Model):
         on_delete=models.CASCADE,
     )  # ForeigKey to User.
 
-    # in_watchlist = False
+    # TODO
+    # is_active = True
 
     # Variable keeps track of current highest bid
     # highest_bid = models.FloatField()

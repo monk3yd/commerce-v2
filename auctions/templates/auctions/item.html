@@ -29,13 +29,19 @@
     <!-- # TODO - Message: 2 bids so far. Your bid is the current bid -->
     <span>2 bids so far. Your bid is the highest bid.</span>
     {% if user.is_authenticated %}
-        <!-- # TODO - Input for placing bid. Place Bid submit button. Consider making Model and Form from it. -->
-        <form action="" method="POST">
-            <div>
-                <input class="form-control" type="text">
-            </div>
-            <input class="btn btn-primary my-2" type="submit" value="Place Bid" placeholder="Bid">
-        </form>
+        {% if item.author != user %}
+            <!-- # TODO - Input for placing bid. Place Bid submit button. Consider making Model and Form from it. -->
+            <form action="" method="POST">
+                <div>
+                    <input class="form-control" type="text">
+                </div>
+                <input class="btn btn-primary my-2" type="submit" value="Place Bid" placeholder="Bid">
+            </form>
+        {% else %}
+        <div>
+            <input class="btn btn-primary my-2" type="submit" value="Close Auction" placeholder="Bid">
+        </div>
+        {% endif %}
     {% endif %}
 
     <!-- # TODO - List details as author of listing, category, etc -->
