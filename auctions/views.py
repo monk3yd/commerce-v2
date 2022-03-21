@@ -136,8 +136,21 @@ def item(request, item_uid):
 
         return HttpResponseRedirect(reverse('watchlist'))
 
+    # Get users watchlist
+    watchlist = WatchList.objects.all()
+    print(watchlist)
+    # Check every item in watchlist if matches actual item
+    for _ in watchlist:
+        if _.item == item:
+            in_watchlist = True
+            break
+        in_watchlist = False
+
+    print(in_watchlist)
+
     return render(request, "auctions/item.html", {
-        "item": item
+        "item": item,
+        "in_watchlist": in_watchlist
     })
 
 
