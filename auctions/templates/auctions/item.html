@@ -39,10 +39,12 @@
                 <input class="btn btn-primary my-2" type="submit" value="Place Bid" placeholder="Bid">
             </form>
         {% else %}
+            {% if item.is_active%}
             <form action="{% url 'close' item.id %}" method="POST">
                 {% csrf_token %}
                 <input class="btn btn-primary my-2" type="submit" value="Close Auction" placeholder="close-auction-btn">
             </form>
+            {% endif %}
         
         {% endif %}
     {% endif %}
@@ -50,8 +52,12 @@
     <!-- # TODO - List details as author of listing, category, etc -->
     <h3>Details</h3>
     <ul>
+        {% if item.is_active %}
+            <li>Status: Active</li>
+        {% else %}
+            <li>Status: Closed</li>
+        {% endif %}
         <li>Listed by: <a href="#">{{ item.author }}</a></li>
         <li>Category: {{ item.category }}</li>
-        <li>Status Active?: {{ item.is_active }}</li>
     </ul>
 {% endblock %}

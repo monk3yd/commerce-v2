@@ -149,6 +149,7 @@ def item(request, item_uid):
     })
 
 
+# Render each user's watchlist
 def watchlist(request):
     # Get user
     user = User.objects.get(pk=request.user.id)
@@ -167,6 +168,7 @@ def remove(request, item_uid):
     return HttpResponseRedirect(reverse("watchlist"))
 
 
+# Close active listing item
 def close(request, item_uid):
     if request.method == "POST":
         user = User.objects.get(pk=request.user.id)
