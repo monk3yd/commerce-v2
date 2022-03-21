@@ -38,7 +38,7 @@ class ListingItem(models.Model):
     )  # ForeigKey to User.
 
     # TODO
-    # is_active = True
+    is_active = models.BooleanField(default=True)
 
     # Variable keeps track of current highest bid
     # highest_bid = models.FloatField()

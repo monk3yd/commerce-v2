@@ -31,16 +31,19 @@
     {% if user.is_authenticated %}
         {% if item.author != user %}
             <!-- # TODO - Input for placing bid. Place Bid submit button. Consider making Model and Form from it. -->
-            <form action="" method="POST">
+            <form action="#" method="POST">
+                {% csrf_token %}
                 <div>
                     <input class="form-control" type="text">
                 </div>
                 <input class="btn btn-primary my-2" type="submit" value="Place Bid" placeholder="Bid">
             </form>
         {% else %}
-        <div>
-            <input class="btn btn-primary my-2" type="submit" value="Close Auction" placeholder="Bid">
-        </div>
+            <form action="{% url 'close' item.id %}" method="POST">
+                {% csrf_token %}
+                <input class="btn btn-primary my-2" type="submit" value="Close Auction" placeholder="close-auction-btn">
+            </form>
+        
         {% endif %}
     {% endif %}
 
@@ -49,5 +52,6 @@
     <ul>
         <li>Listed by: <a href="#">{{ item.author }}</a></li>
         <li>Category: {{ item.category }}</li>
+        <li>Status Active?: {{ item.is_active }}</li>
     </ul>
 {% endblock %}

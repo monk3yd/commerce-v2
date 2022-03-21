@@ -165,3 +165,13 @@ def remove(request, item_uid):
     item = ListingItem.objects.get(id=item_uid)
     WatchList.objects.filter(user=user, item=item).delete()
     return HttpResponseRedirect(reverse("watchlist"))
+
+
+def close(request, item_uid):
+    if request.method == "POST":
+        user = User.objects.get(pk=request.user.id)
+        item = ListingItem.objects.get(author=user, id=item_uid)
+        item.is_active = False
+        item.save()
+
+    return HttpResponseRedirect(reverse('item', args=(item_uid,)))
