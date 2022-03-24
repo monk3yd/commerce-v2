@@ -1,5 +1,9 @@
 {% extends 'auctions/layout.html' %}
 
+{% block title %}
+    My Watchlist
+{% endblock %}
+
 {% block body %}
 {% if user.is_authenticated %}
     <h2>My Watchlist</h2>

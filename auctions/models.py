@@ -70,13 +70,19 @@ class WatchList(models.Model):
 
 
 # TODO - Bids
-# class Bid(models.Model):
-#     bid = models.FloatField()
-#     author = models.ForeignKey(
-#         'User',
-#         on_delete=models.CASCADE,
-#     ) # ForeigKey to User
-#     date = models.DateTimeField()
+class Bid(models.Model):
+    bid = models.FloatField()
+    date = models.DateTimeField()
+
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+    )  # ForeigKey to User
+
+    item = models.ForeignKey(
+        ListingItem,
+        on_delete=models.CASCADE,
+    )  # ForeigKey to User
 
 
 # Comments on auction listings

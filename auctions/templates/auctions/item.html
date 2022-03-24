@@ -1,63 +1,66 @@
 {% extends 'auctions/layout.html' %}
 
+{% block title %}
+  {{ item.title }}
+{% endblock %}
+
 {% block body %}
-    <h1>Listing: {{ item.title }}</h1>
-    {% if user.is_authenticated %}
-        {% if not in_watchlist %}
-        <!-- # Watchlist Add button -->
-        <form action="{% url 'item' item.id %}" method="POST">
-            {% csrf_token %}
-            <!-- # item.id or item.author -->
-            <!-- <input type="hidden" name="item_id" value="{{ item.id }}"> -->
-            <input name="submit-to-watchlist" type="submit" value="Add to Watchlist">
-        </form>
-        {% else %}
-        
-        <!-- # - Watchlist tag -->
-        <div>
-            <span class="badge bg-secondary text-light">Watchlist</span>
-        </div>
-        {% endif %}
-    {% endif %}
-    <img src="{{ item.img_url }}" alt="{{ item.title }}-image" width="640">
+  <h1>Listing: {{ item.title }}</h1>
+  {% if user.is_authenticated %}
+    {% if not in_watchlist %}
+    <!-- # Watchlist Add button -->
+    <form action="{% url 'item' item.id %}" method="POST">
+        {% csrf_token %}
+        <!-- # item.id or item.author -->
+        <!-- <input type="hidden" name="item_id" value="{{ item.id }}"> -->
+        <input name="submit-to-watchlist" type="submit" value="Add to Watchlist">
+    </form>
+    {% else %}
     
-    <h6>{{ item.description }}</h6>
-
-    <!-- # TODO - This needs to be the actual/current bid/price. Get from Bids Model -->
-    <h2>${{ item.starting_bid }}</h2>
-
-    <!-- # TODO - Message: 2 bids so far. Your bid is the current bid -->
-    <span>2 bids so far. Your bid is the highest bid.</span>
-    {% if user.is_authenticated %}
-        {% if item.is_active %}
-            {% if item.author != user %}
-                <!-- # TODO - Input for placing bid. Place Bid submit button. Consider making Model and Form from it. -->
-                <form action="#" method="POST">
-                    {% csrf_token %}
-                    <div>
-                        <input class="form-control" type="text">
-                    </div>
-                    <input class="btn btn-primary my-2" type="submit" value="Place Bid" placeholder="Bid">
-                </form>
-            {% else %}
-                
-                <form action="{% url 'close' item.id %}" method="POST">
-                    {% csrf_token %}
-                    <input class="btn btn-primary my-2" type="submit" value="Close Auction" placeholder="close-auction-btn">
-                </form>
-            {% endif %}
-        {% endif %}
+    <!-- # - Watchlist tag -->
+    <div>
+        <span class="badge bg-secondary text-light">Watchlist</span>
+    </div>
     {% endif %}
+  {% endif %}
+  <img src="{{ item.img_url }}" alt="{{ item.title }}-image" width="640">
+  
+  <h6>{{ item.description }}</h6>
 
-    <!-- # TODO - List details as author of listing, category, etc -->
-    <h3>Details</h3>
-    <ul>
-        {% if item.is_active %}
-            <li>Status: Active</li>
-        {% else %}
-            <li>Status: Closed</li>
-        {% endif %}
-        <li>Listed by: <a href="#">{{ item.author }}</a></li>
-        <li>Category: {{ item.category }}</li>
-    </ul>
+  <!-- # TODO - This needs to be the actual/current bid/price. Get from Bids Model -->
+  <h2>${{ item.starting_bid }}</h2>
+
+  <!-- # TODO - Message: 2 bids so far. Your bid is the current bid -->
+  <span>2 bids so far. Your bid is the highest bid.</span>
+  {% if user.is_authenticated %}
+    {% if item.is_active %}
+      {% if item.author != user %}
+        <!-- # TODO - Input for placing bid. Place Bid submit button. Consider making Model and Form from it. -->
+        <form action="#" method="POST">
+            {% csrf_token %}
+            <div>
+                <input class="form-control" type="text">
+            </div>
+            <input class="btn btn-primary my-2" type="submit" value="Place Bid" placeholder="Bid">
+        </form>
+      {% else %}
+        <form action="{% url 'close' item.id %}" method="POST">
+            {% csrf_token %}
+            <input class="btn btn-primary my-2" type="submit" value="Close Auction" placeholder="close-auction-btn">
+        </form>
+      {% endif %}
+    {% endif %}
+  {% endif %}
+
+  <!-- # TODO - List details as author of listing, category, etc -->
+  <h3>Details</h3>
+  <ul>
+    {% if item.is_active %}
+        <li>Status: Active</li>
+    {% else %}
+        <li>Status: Closed</li>
+    {% endif %}
+    <li>Listed by: <a href="#">{{ item.author }}</a></li>
+    <li>Category: {{ item.category }}</li>
+  </ul>
 {% endblock %}
