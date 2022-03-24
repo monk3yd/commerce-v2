@@ -192,12 +192,19 @@ def bid(request, item_uid):
         bid = form.cleaned_data['bid']
         # Get bidded item
         item = ListingItem.objects.get(id=item_uid)
+        # Get actual user
+        user = User.objects.get(pk=request.user.id)
 
         # Validate : at least as large as the starting bid
         # Validate : greater than any other bids that have been placed.
         if item.starting_bid < bid and item.highest_bid < bid:
-            print(True)
+            # print(True)
             # Replace highscore bid and save it to the database
+            item.highest_bid = bid
+            item.highest_bid_user = user
+            item.save()
+        else:
+            print("Your bid is too low!")
 
         return HttpResponseRedirect(reverse('item', args=(item_uid,)))
 

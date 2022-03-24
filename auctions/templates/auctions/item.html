@@ -28,7 +28,11 @@
   <h6>{{ item.description }}</h6>
 
   <!-- # TODO - This needs to be the actual/current bid/price. Get from Bids Model -->
-  <h2>${{ item.starting_bid }}</h2>
+  {% if item.starting_bid > item.highest_bid %}
+    <h2>${{ item.starting_bid }}</h2>
+  {% else %}
+  <h2>${{ item.highest_bid }}</h2>
+  {% endif %}
 
   <!-- # TODO - Message: 2 bids so far. Your bid is the current bid -->
   <span>2 bids so far. Your bid is the highest bid.</span>

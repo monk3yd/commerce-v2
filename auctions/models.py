@@ -72,7 +72,7 @@ class WatchList(models.Model):
 # TODO - Bids
 class Bid(models.Model):
     bid = models.FloatField()
-    date = models.DateTimeField()
+    # date = models.DateTimeField()
 
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
