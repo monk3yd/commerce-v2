@@ -185,11 +185,25 @@ def close(request, item_uid):
 
 
 #  TODO - Only for login user (use decorator?)
-# def bid(request):
-#     if request.method == "POST":
-        # Validate the bid placed by user
-            # at least as large as the starting bid
-            # greater than any other bids that have been placed.
+def bid(request, item_uid):
+    form = BidForm(request.POST)
+    if form.is_valid():
+        # Get item
+        bid = form.cleaned_data['bid']
+        # Get bidded item
+        item = ListingItem.objects.get(id=item_uid)
+
+        # Validate : at least as large as the starting bid
+        # Validate : greater than any other bids that have been placed.
+        if item.starting_bid < bid and item.highest_bid < bid:
+            print(True)
+            # Replace highscore bid and save it to the database
+
+        return HttpResponseRedirect(reverse('item', args=(item_uid,)))
+
+
+        
+
         # Else error
 
         # Save valid bid into database

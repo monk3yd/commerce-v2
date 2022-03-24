@@ -41,7 +41,7 @@ class ListingItem(models.Model):
     is_active = models.BooleanField(default=True)
 
     # Variable keeps track of current highest bid
-    # highest_bid = models.FloatField()
+    highest_bid = models.FloatField()
 
     def __str__(self):
         return f"{self.title}"

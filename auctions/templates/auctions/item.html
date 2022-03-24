@@ -36,7 +36,7 @@
     {% if item.is_active %}
       {% if item.author != user %}
         <!-- # TODO - Input for placing bid. Place Bid submit button. Consider making Model and Form from it. -->
-        <form action="#" method="POST">
+        <form action="{% url 'bid' item.id %}" method="POST">
             {% csrf_token %}
             {{ form }}
             <!-- <div>
