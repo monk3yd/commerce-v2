@@ -114,7 +114,9 @@ class AddListingItemForm(ModelForm):
         }
 
 
-# class AddWatchListForm(ModelForm):
-#     class Meta:
-#         model = WatchList
-#         fields = '__all__'
+class BidForm(ModelForm):
+    class Meta:
+        model = Bid
+        fields = {
+            'bid': 'Bid'
+        }

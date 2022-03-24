@@ -5,7 +5,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 
-from .models import User, ListingItem, AddListingItemForm, WatchList
+from .models import User, ListingItem, AddListingItemForm, WatchList, BidForm
 # from .forms import AddListingItemForm
 
 from datetime import datetime as dt
@@ -116,6 +116,9 @@ def item(request, item_uid):
     item = ListingItem.objects.get(id=item_uid)
     # print(item.description)  # object access with .
 
+    # Get form
+    form = BidForm()
+
     # Add Item to Watchlist
     if request.method == "POST":
         # Get user id and User object
@@ -129,6 +132,7 @@ def item(request, item_uid):
             return HttpResponseRedirect(reverse('watchlist'))
 
         return HttpResponseRedirect(reverse('watchlist'))
+
     # Get user
     user = User.objects.get(pk=request.user.id)
 
@@ -145,7 +149,8 @@ def item(request, item_uid):
 
     return render(request, "auctions/item.html", {
         "item": item,
-        "in_watchlist": in_watchlist
+        "in_watchlist": in_watchlist,
+        "form": form
     })
 
 
@@ -177,3 +182,16 @@ def close(request, item_uid):
         item.save()
 
     return HttpResponseRedirect(reverse('item', args=(item_uid,)))
+
+
+#  TODO - Only for login user (use decorator?)
+# def bid(request):
+#     if request.method == "POST":
+        # Validate the bid placed by user
+            # at least as large as the starting bid
+            # greater than any other bids that have been placed.
+        # Else error
+
+        # Save valid bid into database
+
+        # Redirect to ListingPage

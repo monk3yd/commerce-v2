@@ -38,9 +38,10 @@
         <!-- # TODO - Input for placing bid. Place Bid submit button. Consider making Model and Form from it. -->
         <form action="#" method="POST">
             {% csrf_token %}
-            <div>
+            {{ form }}
+            <!-- <div>
                 <input class="form-control" type="text">
-            </div>
+            </div> -->
             <input class="btn btn-primary my-2" type="submit" value="Place Bid" placeholder="Bid">
         </form>
       {% else %}
