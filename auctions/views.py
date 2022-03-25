@@ -1,4 +1,4 @@
-from django.core.exceptions import MultipleObjectsReturned
+from django.core.exceptions import MultipleObjectsReturned, ObjectDoesNotExist
 from django.contrib.auth import authenticate, login, logout
 from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect
@@ -152,8 +152,8 @@ def item(request, item_uid):
             "item": item,
             "in_watchlist": in_watchlist,
             "form": form
-        })
-    except:
+            })
+    except ObjectDoesNotExist:
         return render(request, "auctions/item.html", {
             "item": item,
             "form": form
