@@ -39,6 +39,7 @@ class ListingItem(models.Model):
 
     # TODO
     is_active = models.BooleanField(default=True)
+    in_watchlist = models.BooleanField(default=False)
 
     # Variable keeps track of current highest bid
     highest_bid = models.FloatField()

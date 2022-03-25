@@ -9,18 +9,17 @@
   {% if user.is_authenticated %}
     {% if not in_watchlist %}
     <!-- # Watchlist Add button -->
-    <form action="{% url 'item' item.id %}" method="POST">
-        {% csrf_token %}
-        <!-- # item.id or item.author -->
-        <!-- <input type="hidden" name="item_id" value="{{ item.id }}"> -->
-        <input name="submit-to-watchlist" type="submit" value="Add to Watchlist">
-    </form>
+      <form action="{% url 'item' item.id %}" method="POST">
+          {% csrf_token %}
+          <!-- # item.id or item.author -->
+          <!-- <input type="hidden" name="item_id" value="{{ item.id }}"> -->
+          <input name="submit-to-watchlist" type="submit" value="Add to Watchlist">
+      </form>
     {% else %}
-    
-    <!-- # - Watchlist tag -->
-    <div>
-        <span class="badge bg-secondary text-light">Watchlist</span>
-    </div>
+      <!-- # - Watchlist tag -->
+      <div>
+          <span class="badge bg-secondary text-light">Watchlist</span>
+      </div>
     {% endif %}
   {% endif %}
   <img src="{{ item.img_url }}" alt="{{ item.title }}-image" width="640">

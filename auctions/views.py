@@ -140,19 +140,20 @@ def item(request, item_uid):
         # Get users watchlist
         watchlist = WatchList.objects.filter(user=user, item=item)
 
-        in_watchlist = False
+        item.in_watchlist = False
         # Check every item in watchlist if matches actual item
         for _ in watchlist:
             if _.item == item:  # If they are the same means items already exists in watchlist
-                in_watchlist = True
+                item.in_watchlist = True
                 break
-            in_watchlist = False
+            item.in_watchlist = False
 
         return render(request, "auctions/item.html", {
             "item": item,
-            "in_watchlist": in_watchlist,
+            "in_watchlist": item.in_watchlist,
             "form": form
             })
+    # No User or No Watchlist
     except ObjectDoesNotExist:
         return render(request, "auctions/item.html", {
             "item": item,
@@ -209,16 +210,24 @@ def bid(request, item_uid):
             item.highest_bid = bid
             item.highest_bid_user = user
             item.save()
-        else:
-            print("Your bid is too low!")
+            return HttpResponseRedirect(reverse('item', args=(item_uid,)))
 
-        return HttpResponseRedirect(reverse('item', args=(item_uid,)))
+        # return HttpResponseRedirect(reverse('item', args=(item_uid,)))
 
+        return render(request, "auctions/item.html", {
+            "item": item,
+            "form": form,
+            "message": "Your bid is too low!"
+        })
 
-        
+    form = BidForm()
+    return render(request, "auctions/item.html", {
+            "item": item,
+            "form": form
+        })    
 
         # Else error
 
         # Save valid bid into database
 
-        # Redirect to ListingPage
+        # Redirect to ListingPage 'item'

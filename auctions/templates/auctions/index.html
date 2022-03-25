@@ -11,7 +11,11 @@
             </div>
             <div class="col">
                 <h3>{{ listing.title }}</h3>
-                <h4>Price: ${{ listing.starting_bid }}</h4>
+                {% if listing.starting_bid > listing.highest_bid %}
+                    <h4>Price: ${{ listing.starting_bid }}</h4>
+                {% else %}
+                    <h4>Price: ${{ listing.highest_bid }}</h4>
+                {% endif %}
                 <h5>{{ listing.description }}</h5>
                 <!-- # TODO - Format Datetime Field -->
                 <p>Created Feb 22, 2021</p>
