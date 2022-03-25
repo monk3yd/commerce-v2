@@ -128,37 +128,39 @@ def item(request, item_uid):
             # Create & Save item to users watchlist
             watch_item = WatchList(user=user, item=item)
             watch_item.save()
+            item.in_watchlist = True
+            item.save()
         except IntegrityError:
             return HttpResponseRedirect(reverse('watchlist'))
 
         return HttpResponseRedirect(reverse('watchlist'))
 
-    try:
-        # Get user
-        user = User.objects.get(pk=request.user.id)
+    # try:
+        # # Get user
+        # user = User.objects.get(pk=request.user.id)
 
-        # Get users watchlist
-        watchlist = WatchList.objects.filter(user=user, item=item)
+        # # Get users watchlist
+        # watchlist = WatchList.objects.filter(user=user, item=item)
 
-        item.in_watchlist = False
-        # Check every item in watchlist if matches actual item
-        for _ in watchlist:
-            if _.item == item:  # If they are the same means items already exists in watchlist
-                item.in_watchlist = True
-                break
-            item.in_watchlist = False
+        # # Check every item in watchlist if matches actual item
+        # for _ in watchlist:
+        #     if _.item == item:  # If they are the same means items already exists in watchlist
+        #         item.in_watchlist = True
+        #         break
+        #     item.in_watchlist = False
+        # print(item.in_watchlist)
 
-        return render(request, "auctions/item.html", {
-            "item": item,
-            "in_watchlist": item.in_watchlist,
-            "form": form
-            })
-    # No User or No Watchlist
-    except ObjectDoesNotExist:
-        return render(request, "auctions/item.html", {
-            "item": item,
-            "form": form
+    return render(request, "auctions/item.html", {
+        "item": item,
+        "in_watchlist": item.in_watchlist,
+        "form": form
         })
+    # No User or No Watchlist
+    # except ObjectDoesNotExist:
+    #     return render(request, "auctions/item.html", {
+    #         "item": item,
+    #         "form": form
+    #     })
 
 
 # Render each user's watchlist
@@ -177,6 +179,8 @@ def remove(request, item_uid):
     user = User.objects.get(pk=request.user.id)
     item = ListingItem.objects.get(id=item_uid)
     WatchList.objects.filter(user=user, item=item).delete()
+    item.in_watchlist = False
+    item.save()
     return HttpResponseRedirect(reverse("watchlist"))
 
 
@@ -212,11 +216,12 @@ def bid(request, item_uid):
             item.save()
             return HttpResponseRedirect(reverse('item', args=(item_uid,)))
 
-        # return HttpResponseRedirect(reverse('item', args=(item_uid,)))
-
+        print(item.in_watchlist)
+        form = BidForm()
         return render(request, "auctions/item.html", {
             "item": item,
             "form": form,
+            "in_watchlist": item.in_watchlist,
             "message": "Your bid is too low!"
         })
 

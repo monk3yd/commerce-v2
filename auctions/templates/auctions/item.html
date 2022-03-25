@@ -34,8 +34,8 @@
   {% endif %}
 
   <!-- # TODO - Message: 2 bids so far. Your bid is the current bid -->
-  <span>2 bids so far. Your bid is the highest bid.</span>
-  {% if user.is_authenticated %}
+  
+  {% if user.is_authenticated %}  
     {% if item.is_active %}
       {% if item.author != user %}
         <!-- # TODO - Input for placing bid. Place Bid submit button. Consider making Model and Form from it. -->
@@ -53,6 +53,11 @@
             <input class="btn btn-primary my-2" type="submit" value="Close Auction" placeholder="close-auction-btn">
         </form>
       {% endif %}
+    {% endif %}
+
+    {% if message %}
+    <!-- 2 bids so far. Your bid is the highest bid. -->
+      <span>{{ message }}</span>
     {% endif %}
   {% endif %}
 
