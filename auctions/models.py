@@ -37,7 +37,7 @@ class ListingItem(models.Model):
         on_delete=models.CASCADE,
     )  # ForeigKey to User.
 
-    # TODO
+    # Statuses 
     is_active = models.BooleanField(default=True)
     in_watchlist = models.BooleanField(default=False)
 
@@ -89,14 +89,23 @@ class Bid(models.Model):
     models.DateTimeField(auto_now=True)
 
 
-# Comments on auction listings
+# TODO - Comments on auction listings
 class ListingComment(models.Model):
     comment = models.CharField(max_length=500, verbose_name="")
     author = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
     )  # ForeigKey to User
+
+    item = models.ForeignKey(
+        ListingItem,
+        on_delete=models.CASCADE,
+    )  # ForeigKey to ListingItem
+
     date = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f"{self.comment}"
 
 
 # FORMS

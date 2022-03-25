@@ -82,14 +82,20 @@
 
 <!-- Comments -->
 <h3>Write a comment...</h3>
-<form action="" method="POST">
+<form action="{% url 'comment' item.id %}" method="POST">
+  {% csrf_token %}
+  {{ comment_form }}
   <!-- Textarea -->
   <!-- <textarea name="" id="" cols="30" rows="4"></textarea> -->
-  {{ comment_form }}
   <br>
-  <input type="button" value="Submit">
+  <input type="submit" value="Submit">
 </form>
 
 <!-- List of comments -->
 <h3>Comments</h3>
+<ul>
+  {% for comment in comments %}
+    <li>{{ comment }}</li>
+  {% endfor %}
+</ul>
 {% endblock %}

@@ -6,7 +6,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 
-from .models import User, ListingItem, AddListingItemForm, WatchList, BidForm, CommentForm
+from .models import User, ListingItem, AddListingItemForm, WatchList, BidForm, CommentForm, ListingComment
 # from .forms import AddListingItemForm
 
 from datetime import datetime as dt
@@ -122,7 +122,6 @@ def item(request, item_uid):
     form = BidForm()
     comment_form = CommentForm()
 
-
     # Add Item to Watchlist
     if request.method == "POST":
         # Get user id and User object
@@ -139,33 +138,17 @@ def item(request, item_uid):
 
         return HttpResponseRedirect(reverse('watchlist'))
 
-    # try:
-        # # Get user
-        # user = User.objects.get(pk=request.user.id)
-
-        # # Get users watchlist
-        # watchlist = WatchList.objects.filter(user=user, item=item)
-
-        # # Check every item in watchlist if matches actual item
-        # for _ in watchlist:
-        #     if _.item == item:  # If they are the same means items already exists in watchlist
-        #         item.in_watchlist = True
-        #         break
-        #     item.in_watchlist = False
-        # print(item.in_watchlist)
+    # Get all comments from present item
+    comments = ListingComment.objects.filter(item=item)
 
     return render(request, "auctions/item.html", {
         "item": item,
         "in_watchlist": item.in_watchlist,
         "form": form,
         "comment_form": comment_form,
+        "comments": comments,
         })
-    # No User or No Watchlist
-    # except ObjectDoesNotExist:
-    #     return render(request, "auctions/item.html", {
-    #         "item": item,
-    #         "form": form
-    #     })
+
 
 @login_required
 # Render each user's watchlist
@@ -233,8 +216,19 @@ def bid(request, item_uid):
             "message": "Your bid is too low!"
         })
 
-    # form = BidForm()
-    # return render(request, "auctions/item.html", {
-    #         "item": item,
-    #         "form": form
-    #     })
+
+@login_required
+def comment(request, item_uid):
+    item = ListingItem.objects.get(id=item_uid)
+    user = User.objects.get(pk=request.user.id)
+
+    # comment = ListingComment.objects.get(id=item_uid)
+    form = CommentForm(request.POST)
+
+    if form.is_valid():
+        text = form.cleaned_data['comment']
+        comment = ListingComment(comment=text, author=user, item=item)
+        print(comment)
+        comment.save()
+
+        return HttpResponseRedirect(reverse('item', args=(item_uid,)))
