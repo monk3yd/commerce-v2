@@ -133,25 +133,32 @@ def item(request, item_uid):
 
         return HttpResponseRedirect(reverse('watchlist'))
 
-    # Get user
-    user = User.objects.get(pk=request.user.id)
+    try:
+        # Get user
+        user = User.objects.get(pk=request.user.id)
 
-    # Get users watchlist
-    watchlist = WatchList.objects.filter(user=user, item=item)
+        # Get users watchlist
+        watchlist = WatchList.objects.filter(user=user, item=item)
 
-    in_watchlist = False
-    # Check every item in watchlist if matches actual item
-    for _ in watchlist:
-        if _.item == item:  # If they are the same means items already exists in watchlist
-            in_watchlist = True
-            break
         in_watchlist = False
+        # Check every item in watchlist if matches actual item
+        for _ in watchlist:
+            if _.item == item:  # If they are the same means items already exists in watchlist
+                in_watchlist = True
+                break
+            in_watchlist = False
 
-    return render(request, "auctions/item.html", {
-        "item": item,
-        "in_watchlist": in_watchlist,
-        "form": form
-    })
+        return render(request, "auctions/item.html", {
+            "item": item,
+            "in_watchlist": in_watchlist,
+            "form": form
+        })
+    except:
+        return render(request, "auctions/item.html", {
+            "item": item,
+            "form": form
+        })
+
 
 
 # Render each user's watchlist
