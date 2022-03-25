@@ -160,7 +160,6 @@ def item(request, item_uid):
         })
 
 
-
 # Render each user's watchlist
 def watchlist(request):
     # Get user
@@ -204,7 +203,7 @@ def bid(request, item_uid):
 
         # Validate : at least as large as the starting bid
         # Validate : greater than any other bids that have been placed.
-        if item.starting_bid < bid and item.highest_bid < bid:
+        if item.starting_bid <= bid and item.highest_bid < bid:
             # print(True)
             # Replace highscore bid and save it to the database
             item.highest_bid = bid
