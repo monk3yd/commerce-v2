@@ -6,7 +6,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 
-from .models import User, ListingItem, AddListingItemForm, WatchList, BidForm, CommentForm, ListingComment
+from .models import User, ListingItem, AddListingItemForm, WatchList, BidForm, CommentForm, ListingComment, category_choices
 # from .forms import AddListingItemForm
 
 from datetime import datetime as dt
@@ -231,3 +231,22 @@ def comment(request, item_uid):
         # print(comment)
         comment.save()
         return HttpResponseRedirect(reverse('item', args=(item_uid,)))
+
+
+# All categories
+def categories(request):
+    categories = [category[0] for category in category_choices]
+    return render(request, "auctions/categories.html", {
+        "categories": categories
+    })
+
+
+# Specific category
+def category(request, category_name):
+    # Query for all active listings with that category name
+    category_items = ListingItem.objects.filter(category=category_name)
+    print(category_items)
+    return render(request, "auctions/category.html", {
+        "category_items":  category_items,
+        "category_name": category_name
+    })

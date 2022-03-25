@@ -29,6 +29,10 @@ class ListingItem(models.Model):
     starting_bid = models.FloatField()
     img_url = models.URLField(blank=True)  # models.ImageField()
     category = models.CharField(max_length=50, choices=category_choices)
+    # category = models.ForeignKey(
+    #     Category,
+    #     on_delete=CASCADE,
+    # )
 
     # Auto-generated when submitted
     starting_date = models.DateTimeField(auto_now=True)
@@ -37,7 +41,7 @@ class ListingItem(models.Model):
         on_delete=models.CASCADE,
     )  # ForeigKey to User.
 
-    # Statuses 
+    # Statuses
     is_active = models.BooleanField(default=True)
     in_watchlist = models.BooleanField(default=False)
 
@@ -71,7 +75,7 @@ class WatchList(models.Model):
         # return f"User ID: {self.user}, Item ID: {self.item}"
 
 
-# TODO - Bids
+# - Bids
 class Bid(models.Model):
     bid = models.FloatField()
     # date = models.DateTimeField()
@@ -89,7 +93,7 @@ class Bid(models.Model):
     models.DateTimeField(auto_now=True)
 
 
-# TODO - Comments on auction listings
+# - Comments on auction listings
 class ListingComment(models.Model):
     comment = models.CharField(max_length=500, verbose_name="")
     author = models.ForeignKey(
@@ -106,6 +110,14 @@ class ListingComment(models.Model):
 
     def __str__(self):
         return f"{self.comment}"
+
+
+# class Category(models.Model):
+#     name = models.CharField(max_length=100)
+#     item = models.ManyToManyField(ListingItem)
+
+#     def __str__(self):
+#         return f"{self.name}"
 
 
 # FORMS
