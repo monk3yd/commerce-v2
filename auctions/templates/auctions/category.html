@@ -8,7 +8,9 @@
     <h2>{{ category_name }}</h2>
     <ul>
       {% for item in category_items %}
-        <li><a href="{% url 'item' item.id %}">{{ item }}</a></li>
+        {% if item.is_active %}
+            <li><a href="{% url 'item' item.id %}">{{ item }}</a></li>
+        {% endif %}
       {% endfor %}
     </ul>
 {% endblock %}
