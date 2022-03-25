@@ -2,7 +2,7 @@ from django.conf import settings
 from django.contrib.auth.models import AbstractUser
 from django.contrib.sessions.models import Session
 from django.db import models
-from django.forms import ModelForm
+from django.forms import ModelForm, Textarea
 
 
 from datetime import datetime as dt
@@ -90,13 +90,13 @@ class Bid(models.Model):
 
 
 # Comments on auction listings
-# class ListingComment(models.Model):
-#     comment = models.CharField()
-#     author = models.ForeignKey(
-#         settings.AUTH_USER_MODEL,
-#         on_delete=models.CASCADE,
-#     )  # ForeigKey to User
-#     date = models.DateTimeField(auto_now=True)
+class ListingComment(models.Model):
+    comment = models.CharField(max_length=500, verbose_name="")
+    author = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+    )  # ForeigKey to User
+    date = models.DateTimeField(auto_now=True)
 
 
 # FORMS
@@ -126,4 +126,13 @@ class BidForm(ModelForm):
         model = Bid
         fields = {
             'bid': 'Bid'
+        }
+
+
+class CommentForm(ModelForm):
+    class Meta:
+        model = ListingComment
+        fields = ['comment']
+        widgets = {
+            'comment': Textarea(attrs={'cols': 40, 'rows': 5}),
         }

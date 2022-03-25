@@ -6,7 +6,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 
-from .models import User, ListingItem, AddListingItemForm, WatchList, BidForm
+from .models import User, ListingItem, AddListingItemForm, WatchList, BidForm, CommentForm
 # from .forms import AddListingItemForm
 
 from datetime import datetime as dt
@@ -118,8 +118,10 @@ def item(request, item_uid):
     item = ListingItem.objects.get(id=item_uid)
     # print(item.description)  # object access with .
 
-    # Get form
+    # Get forms
     form = BidForm()
+    comment_form = CommentForm()
+
 
     # Add Item to Watchlist
     if request.method == "POST":
@@ -155,7 +157,8 @@ def item(request, item_uid):
     return render(request, "auctions/item.html", {
         "item": item,
         "in_watchlist": item.in_watchlist,
-        "form": form
+        "form": form,
+        "comment_form": comment_form,
         })
     # No User or No Watchlist
     # except ObjectDoesNotExist:
