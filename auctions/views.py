@@ -217,7 +217,7 @@ def bid(request, item_uid):
             # print(True)
             # Replace highscore bid and save it to the database
             item.highest_bid = bid
-            item.highest_bid_user = user
+            item.highest_bid_user = user.username
             item.save()
             return HttpResponseRedirect(reverse('item', args=(item_uid,)))
 
@@ -230,8 +230,8 @@ def bid(request, item_uid):
             "message": "Your bid is too low!"
         })
 
-    form = BidForm()
-    return render(request, "auctions/item.html", {
-            "item": item,
-            "form": form
-        })
+    # form = BidForm()
+    # return render(request, "auctions/item.html", {
+    #         "item": item,
+    #         "form": form
+    #     })

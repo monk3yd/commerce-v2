@@ -3,6 +3,8 @@
 {% block body %}
   <h2>Active Listings</h2>
   {% for listing in listings %}
+  
+
     {% if listing.is_active %}
       <div class="row align-items-start m-4" style="border: 1px solid rgb(219, 216, 216);">
         <div class="col">
@@ -22,9 +24,10 @@
           <p>Created Feb 22, 2021</p>
         </div>
       </div>
-    {% else %}
-      <p>Currently there aren't any active listings.</p>
     {% endif %}
+   
+  {% empty %}
+    <span>Currently there aren't any active listings.</span>
   {% endfor %}
     
 {% endblock %}

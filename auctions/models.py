@@ -43,6 +43,7 @@ class ListingItem(models.Model):
 
     # Variable keeps track of current highest bid
     highest_bid = models.FloatField(default=0)
+    highest_bid_user = models.CharField(max_length=50, blank=True, null=True)
 
     def __str__(self):
         return f"{self.title}"

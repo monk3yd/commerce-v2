@@ -22,6 +22,8 @@
       </div>
     {% endif %}
   {% endif %}
+
+  <!-- Item -->
   <img src="{{ item.img_url }}" alt="{{ item.title }}-image" width="640">
   
   <h6>{{ item.description }}</h6>
@@ -53,6 +55,10 @@
             <input class="btn btn-primary my-2" type="submit" value="Close Auction" placeholder="close-auction-btn">
         </form>
       {% endif %}
+    {% else %}
+        {% if item.highest_bid_user == user.username %}
+          <span>You are the Winner: {{ item.highest_bid_user }}!!</span>
+        {% endif %}
     {% endif %}
 
     {% if message %}
