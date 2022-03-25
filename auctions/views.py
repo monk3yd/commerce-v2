@@ -228,7 +228,6 @@ def comment(request, item_uid):
     if form.is_valid():
         text = form.cleaned_data['comment']
         comment = ListingComment(comment=text, author=user, item=item)
-        print(comment)
+        # print(comment)
         comment.save()
-
         return HttpResponseRedirect(reverse('item', args=(item_uid,)))

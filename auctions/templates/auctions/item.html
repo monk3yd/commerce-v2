@@ -95,7 +95,12 @@
 <h3>Comments</h3>
 <ul>
   {% for comment in comments %}
-    <li>{{ comment }}</li>
+    <li>
+      {{ comment }} 
+      <div>
+        by: {{ comment.author }}
+      </div>
+    </li>
   {% endfor %}
 </ul>
 {% endblock %}
