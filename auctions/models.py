@@ -86,12 +86,17 @@ class Bid(models.Model):
         on_delete=models.CASCADE,
     )  # ForeigKey to User
 
+    models.DateTimeField(auto_now=True)
+
 
 # Comments on auction listings
 # class ListingComment(models.Model):
 #     comment = models.CharField()
-#     author = models.CharField()  # ForeigKey to User
-#     date = models.
+#     author = models.ForeignKey(
+#         settings.AUTH_USER_MODEL,
+#         on_delete=models.CASCADE,
+#     )  # ForeigKey to User
+#     date = models.DateTimeField(auto_now=True)
 
 
 # FORMS
