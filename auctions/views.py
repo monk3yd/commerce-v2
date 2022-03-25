@@ -1,5 +1,6 @@
 from django.core.exceptions import MultipleObjectsReturned, ObjectDoesNotExist
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
@@ -71,6 +72,7 @@ def register(request):
         return render(request, "auctions/register.html")
 
 
+@login_required
 def create(request):
     if request.method == "POST":
         form = AddListingItemForm(request.POST)
@@ -162,7 +164,7 @@ def item(request, item_uid):
     #         "form": form
     #     })
 
-
+@login_required
 # Render each user's watchlist
 def watchlist(request):
     # Get user
@@ -175,6 +177,7 @@ def watchlist(request):
 
 
 # Remove item from watchlist
+@login_required
 def remove(request, item_uid):
     user = User.objects.get(pk=request.user.id)
     item = ListingItem.objects.get(id=item_uid)
@@ -185,6 +188,7 @@ def remove(request, item_uid):
 
 
 # Close active listing item
+@login_required
 def close(request, item_uid):
     if request.method == "POST":
         user = User.objects.get(pk=request.user.id)
@@ -196,6 +200,7 @@ def close(request, item_uid):
 
 
 #  TODO - Only for login user (use decorator?)
+@login_required
 def bid(request, item_uid):
     form = BidForm(request.POST)
     if form.is_valid():
@@ -229,10 +234,4 @@ def bid(request, item_uid):
     return render(request, "auctions/item.html", {
             "item": item,
             "form": form
-        })    
-
-        # Else error
-
-        # Save valid bid into database
-
-        # Redirect to ListingPage 'item'
+        })
