@@ -6,7 +6,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
 
-from .models import User, ListingItem, AddListingItemForm, WatchList, BidForm, CommentForm, ListingComment, category_choices
+from .models import User, ListingItem, AddListingItemForm, WatchList, BidForm, CommentForm, ListingComment, category_choices, Bid
 # from .forms import AddListingItemForm
 
 from datetime import datetime as dt
@@ -221,10 +221,13 @@ def bid(request, item_uid):
             item.highest_bid = bid
             item.highest_bid_user = user.username
             item.save()
+            current_bid = Bid(bid=bid, user=user, item=item)
+            current_bid.save()
             return HttpResponseRedirect(reverse('item', args=(item_uid,)))
 
         print(item.in_watchlist)
         form = BidForm()
+        # TODO - Redirect to item and pass message by session
         return render(request, "auctions/item.html", {
             "item": item,
             "form": form,

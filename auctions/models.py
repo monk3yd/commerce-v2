@@ -3,6 +3,7 @@ from django.contrib.auth.models import AbstractUser
 from django.contrib.sessions.models import Session
 from django.db import models
 from django.forms import ModelForm, Textarea
+from django.utils.translation import gettext_lazy as _
 
 
 from datetime import datetime as dt
@@ -143,7 +144,12 @@ class BidForm(ModelForm):
     class Meta:
         model = Bid
         fields = {
-            'bid': 'Bid'
+            'bid': 'Bid',
+        }
+        error_messages = {
+            'bid': {
+                'max_length': _("Your bid is too low!"),
+            },
         }
 
 
