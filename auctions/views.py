@@ -149,9 +149,11 @@ def item(request, item_uid):
         watched_item.save()
 
         return HttpResponseRedirect(reverse('watchlist'))
-
-    if WatchList.objects.filter(user=request.user, item=item).exists():
-        item.in_watchlist = True
+    try:
+        if WatchList.objects.filter(user=request.user, item=item).exists():
+            item.in_watchlist = True
+    except TypeError:
+        pass
 
     return render(request, "auctions/item.html", {
         "item": item,
