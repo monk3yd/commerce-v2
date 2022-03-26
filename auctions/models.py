@@ -90,6 +90,9 @@ class Bid(models.Model):
 
     models.DateTimeField(auto_now=True)
 
+    def __str__(self):
+        return f"{self.user} Bid ${self.bid} on {self.item}"
+
 
 # - Comments on auction listings
 class ListingComment(models.Model):
