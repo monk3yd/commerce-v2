@@ -8,12 +8,12 @@
 {% if user.is_authenticated %}
     <h2>My Watchlist</h2>
     <ul class="watchlist-list">
-        {% for element in watchlist %}
+        {% for item in watchlist %}
         <li>
-            <a class="watchlist-item" href="{% url 'item' element.item.id %}">
-                {{ element }}
+            <a class="watchlist-item" href="{% url 'item' item.item_id %}">
+                {{ item }}
             </a>
-            <a class="remove-badge-wrap" href="{% url 'remove' element.item.id %}">
+            <a class="remove-badge-wrap" href="{% url 'remove' item.item_id %}">
                 <span class="remove-badge badge bg-danger"> remove</span>
             </a>
             <!-- # https://stackoverflow.com/questions/13092268/how-do-you-join-two-tables-on-a-foreign-key-field-using-django-orm -->

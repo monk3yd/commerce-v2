@@ -29,10 +29,6 @@ class ListingItem(models.Model):
     starting_bid = models.FloatField()
     img_url = models.URLField(blank=True)  # models.ImageField()
     category = models.CharField(max_length=50, choices=category_choices)
-    # category = models.ForeignKey(
-    #     Category,
-    #     on_delete=CASCADE,
-    # )
 
     # Auto-generated when submitted
     starting_date = models.DateTimeField(auto_now=True)
@@ -65,7 +61,7 @@ class WatchList(models.Model):
     item = models.ForeignKey(
         ListingItem,
         on_delete=models.CASCADE,
-    )  # ForeigKey to ListingItem
+        )
 
     class Meta:
         unique_together = ('user', 'item')

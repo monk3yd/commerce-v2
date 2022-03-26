@@ -11,8 +11,6 @@
     <!-- # Watchlist Add button -->
       <form action="{% url 'item' item.id %}" method="POST">
           {% csrf_token %}
-          <!-- # item.id or item.author -->
-          <!-- <input type="hidden" name="item_id" value="{{ item.id }}"> -->
           <input name="submit-to-watchlist" type="submit" value="Add to Watchlist">
       </form>
     {% else %}
@@ -35,7 +33,7 @@
   <h2>${{ item.highest_bid }}</h2>
   {% endif %}
 
-  <!-- # TODO - Message: 2 bids so far. Your bid is the current bid -->
+  <!-- # - Message: 2 bids so far. Your bid is the current bid -->
   
   {% if user.is_authenticated %}  
     {% if item.is_active %}
@@ -44,9 +42,6 @@
         <form action="{% url 'bid' item.id %}" method="POST">
             {% csrf_token %}
             {{ form }}
-            <!-- <div>
-                <input class="form-control" type="text">
-            </div> -->
             <input class="btn btn-primary my-2" type="submit" value="Place Bid" placeholder="Bid">
         </form>
       {% else %}
@@ -67,7 +62,7 @@
     {% endif %}
   {% endif %}
 
-  <!-- # TODO - List details as author of listing, category, etc -->
+  <!-- # - List details as author of listing, category, etc -->
   <h3>Details</h3>
   <ul>
     {% if item.is_active %}

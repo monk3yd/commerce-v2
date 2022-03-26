@@ -3,7 +3,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
 
 from .models import User, ListingItem, AddListingItemForm, WatchList, BidForm, CommentForm, ListingComment, category_choices
@@ -122,24 +122,36 @@ def item(request, item_uid):
     form = BidForm()
     comment_form = CommentForm()
 
+    # Get all comments from present item
+    comments = ListingComment.objects.filter(item=item)
+
     # Add Item to Watchlist
     if request.method == "POST":
-        # Get user id and User object
-        user = User.objects.get(pk=request.user.id)
+        # item = ListingItem.objects.get(id=item_uid)
+        item = get_object_or_404(ListingItem, pk=item_uid)
+        print(item)
+        # try:
 
-        try:
-            # Create & Save item to users watchlist
-            watch_item = WatchList(user=user, item=item)
-            watch_item.save()
-            item.in_watchlist = True
-            item.save()
-        except IntegrityError:
-            return HttpResponseRedirect(reverse('watchlist'))
+        # If item already exists in users watchlist
+        if WatchList.objects.filter(user=request.user, item=item).exists():
+            print("Item already in watchlist!")
+            return render(request, "auctions/item.html", {
+                "item": item,
+                "in_watchlist": item.in_watchlist,
+                "form": form,
+                "comment_form": comment_form,
+                "comments": comments,
+            })
+
+        # Save item to users watchlist
+        watched_item = WatchList(user=request.user, item=item)
+        watched_item.item.in_watchlist = True
+        watched_item.save()
 
         return HttpResponseRedirect(reverse('watchlist'))
 
-    # Get all comments from present item
-    comments = ListingComment.objects.filter(item=item)
+    if WatchList.objects.filter(user=request.user, item=item).exists():
+        item.in_watchlist = True
 
     return render(request, "auctions/item.html", {
         "item": item,
@@ -156,9 +168,11 @@ def watchlist(request):
     # Get user
     user = User.objects.get(pk=request.user.id)
     # Get all watchlist items that belongs to actual user
-    watchlist = WatchList.objects.filter(user=user)
+    user_watchlist = WatchList.objects.filter(user=request.user)
+    print(user_watchlist)
+
     return render(request, "auctions/watchlist.html", {
-        "watchlist": watchlist
+        "watchlist": user_watchlist
     })
 
 
