@@ -5,6 +5,7 @@
 {% endblock %}
 
 {% block body %}
+  <h2 class="body-title">Categories</h2>
   <ul>
     {% for category in categories %}
       <li><a href="{% url 'category' category_name=category %}">{{ category }}</a></li>

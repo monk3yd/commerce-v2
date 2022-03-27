@@ -36,6 +36,15 @@ h4 {
     font-weight: 200;
 }
 
+/* All unordered lists */
+ul {
+    list-style-type: none;
+}
+/* All links */
+a {
+    text-decoration: none;
+}
+
 /* Navbar */
 .navbar {
     display: flex;
@@ -43,23 +52,14 @@ h4 {
     align-items: center;
 }
 
-/* .navbar-brand {
-    
-} */
-
 .navbar-nav {
     display: flex;
-    list-style-type: none;
 }
 
 .nav-item {
     /* margin: 0.5rem 1rem; */
     margin-left: 1.5rem;
     padding: 1rem;
-}
-
-.nav-link {
-    text-decoration: none;
 }
 
 .login-status {
