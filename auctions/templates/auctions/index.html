@@ -3,7 +3,8 @@
 {% block body %}
   <h2 class="body-title">Active Listings</h2>
   
-  {% for listing in listings %}
+  <div class="all-items">
+    {% for listing in listings %}
     {% if listing.is_active %}
       <div class="item">
         <div class="item-image">
@@ -28,5 +29,7 @@
   {% empty %}
     <span>Currently there aren't any active listings.</span>
   {% endfor %}
+  </div>
+  
     
 {% endblock %}
