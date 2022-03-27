@@ -7,7 +7,7 @@
     {% for listing in listings %}
     {% if listing.is_active %}
       <div class="item">
-        <div class="item-image">
+        <div class="item-image-container">
           <a class="item-image-link" href="{% url 'item' listing.id %}">
             <img src="{{ listing.img_url }}" alt="{{ listing.title }}-image">
           </a>             

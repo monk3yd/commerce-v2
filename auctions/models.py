@@ -2,7 +2,7 @@ from django.conf import settings
 from django.contrib.auth.models import AbstractUser
 from django.contrib.sessions.models import Session
 from django.db import models
-from django.forms import ModelForm, Textarea
+from django.forms import ModelForm, Textarea, TextInput
 from django.utils.translation import gettext_lazy as _
 
 
@@ -152,6 +152,9 @@ class BidForm(ModelForm):
         model = Bid
         fields = {
             'bid': 'Bid',
+        }
+        widgets = {
+            'bid': TextInput(attrs={'placeholder': 'Please insert your bid amount'})
         }
         error_messages = {
             'bid': {

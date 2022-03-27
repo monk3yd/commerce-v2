@@ -125,15 +125,15 @@ hr {
     gap: 3rem;
 
     border: 2px solid rgb(216, 219, 216);
-    /* margin-bottom: 2rem; */
     padding: 2rem 2rem;
 
     max-width: 80rem;
     width: 51rem;
 }
 
-.item-image {
+.item-image-container {
     border: 1px solid rgb(216, 219, 216);
+    
     height: auto;
     width: 100%;
 }
@@ -177,6 +177,17 @@ hr {
     font-size: 1.2rem;
     font-weight: 300;
 }
+
+/* Item Page */
+.btn-wrap {
+    display: flex;
+    justify-content: flex-start;
+}
+
+.submit-btn {
+    margin-top: 1rem;
+}
+
 
 /* Categories */
 
