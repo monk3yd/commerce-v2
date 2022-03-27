@@ -120,7 +120,7 @@ hr {
     gap: 3rem;
 
     border: 2px solid rgb(216, 219, 216);
-    padding: 2rem 1rem;
+    padding: 2rem 2rem;
 
     max-width: 80rem;
     min-width: 57rem;
@@ -144,6 +144,25 @@ hr {
     flex: 1 0 auto;
 
     border: 1px solid rgb(216, 219, 216);
+    padding: 1rem;
+}
+
+.item-title {
+    font-weight: 600;
+}
+
+.item-description {
+    font-weight: 400;
+}
+
+.item-price {
+    font-weight: 700;
+    font-size: 2rem;
+}
+
+.item-date {
+    font-size: 1.2rem;
+    font-weight: 300;
 }
 
 /* Categories */
