@@ -10,6 +10,7 @@ html {
 
 body {
     color: rgb(67, 67, 70);
+    background-color: rgb(234, 241, 234);
     font-size: 1.8rem;
     font-family: 'Raleway', 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     padding: 6rem 10rem;
@@ -84,13 +85,23 @@ hr {
 }
 
 .form-control {
+    border: 1px solid rgb(12, 99, 12);
+    border-radius: 0.3rem;
     margin-bottom: 1rem;
     padding: 0.6rem;
+    
 }
 
 .btn {
+    border: 1px solid rgb(12, 99, 12);
+    border-radius: 0.3rem;
     margin-bottom: 1rem;
     padding: 0.6rem 4rem;
+}
+
+.btn:hover {
+    color: white;
+    background-color:rgb(12, 99, 12);
 }
 
 /* Categories */
