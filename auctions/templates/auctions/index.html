@@ -5,22 +5,22 @@
   
   {% for listing in listings %}
     {% if listing.is_active %}
-      <div class="row align-items-start m-4" style="border: 1px solid rgb(219, 216, 216);">
-        <div class="col">
-          <a href="{% url 'item' listing.id %}">
-            <img src="{{ listing.img_url }}" alt="{{ listing.title }}-image" height="200" width="640">
+      <div class="item">
+        <div class="item-image">
+          <a class="item-image-link" href="{% url 'item' listing.id %}">
+            <img src="{{ listing.img_url }}" alt="{{ listing.title }}-image">
           </a>             
         </div>
-        <div class="col">
-          <h3>{{ listing.title }}</h3>
-          <h5>{{ listing.description }}</h5>
+        <div class="item-info">
+          <h3 class="item-title">{{ listing.title }}</h3>
+          <h5 class="item-description">{{ listing.description }}</h5>
           {% if listing.starting_bid > listing.highest_bid %}
-            <h4>Price: ${{ listing.starting_bid }}</h4>
+            <h4 class="item-price">Price: ${{ listing.starting_bid }}</h4>
           {% else %}
-            <h4>Price: ${{ listing.highest_bid }}</h4>
+            <h4 class="item-price">Price: ${{ listing.highest_bid }}</h4>
           {% endif %}
           <!-- # TODO - Format Datetime Field -->
-          <p>Created Feb 22, 2021</p>
+          <p class="item-date">Created Feb 22, 2021</p>
         </div>
       </div>
     {% endif %}
