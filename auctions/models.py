@@ -141,6 +141,10 @@ class AddListingItemForm(ModelForm):
             'img_url': 'Image URL',
             'category': 'Category'
         }
+        # https://colinkingswood.github.io/Model-Form-Customisation/
+        # widgets = {
+
+        # }
 
 
 class BidForm(ModelForm):

@@ -6,7 +6,7 @@
 
 {% block body %}
 {% if user.is_authenticated %}
-    <h2>My Watchlist</h2>
+    <h2 class="body-title">My Watchlist</h2>
     <ul class="watchlist-list">
         {% for item in watchlist %}
         <li>
@@ -20,7 +20,7 @@
             <!-- {{ element.item.title}}   -->
         </li>
         {% empty %}
-            <li><span>There are no items in watchlist.</span></li>
+            <span>There are no items in watchlist.</span>
         {% endfor %}
     </ul>
 {% endif %}

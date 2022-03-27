@@ -5,33 +5,32 @@
 {% endblock %}
 
 {% block body %}
-    <h2>Create Listing</h2>
+    <h2 class="body-title">Create Listing</h2>
     <form action="{% url 'create' %}" method="POST">
         {% csrf_token %}
         <!-- {{ form.as_p }} -->
-        <p>
+        <div class="form-group">
             {{ form.title.label_tag }}              <!-- <label for="">Title: </label> -->
             {{ form.title }}
-        </p>
-        <p>
+        </div>
+        <div class="form-group">
             {{ form.description.label_tag }}  <!-- <label for="">Description: </label> -->
             {{ form.description }}
-        </p>
-        <p>
-            
+        </div>
+        <div class="form-group">
             {{ form.starting_bid.label_tag }}  <!-- <label for="">Starting Bid: </label> -->
             {{ form.starting_bid }}
-        </p>
-        <p>
+        </div>
+        <div class="form-group">
             {{ form.img_url.label_tag }}  <!-- <label for="">Image URL: </label> -->
             {{ form.img_url }}
-        </p>
-        <p>
+        </div>
+        <div class="form-group">
             {{ form.category.label_tag }}
             {{ form.category }}
-        </p>
+        </div>
         
-        <input type="submit" value="Submit">
+        <input class="btn" type="submit" value="Submit">
 
     </form>
 {% endblock %}

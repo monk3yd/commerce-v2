@@ -61,6 +61,7 @@ a {
 
 .navbar-nav {
     display: flex;
+    flex-wrap: wrap;
 }
 
 .nav-item {
@@ -84,12 +85,14 @@ hr {
     margin-bottom: 3rem;
 }
 
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
 .form-control {
     border: 1px solid rgb(12, 99, 12);
     border-radius: 0.3rem;
-    margin-bottom: 1rem;
     padding: 0.6rem;
-    
 }
 
 .btn {
