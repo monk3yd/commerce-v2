@@ -40,8 +40,14 @@ h4 {
 ul {
     list-style-type: none;
 }
+
+li {
+    padding: 1rem;
+}
+
 /* All links */
 a {
+    color: rgb(12, 99, 12);
     text-decoration: none;
 }
 
@@ -59,7 +65,7 @@ a {
 .nav-item {
     /* margin: 0.5rem 1rem; */
     margin-left: 1.5rem;
-    padding: 1rem;
+    /* padding: 1rem; */
 }
 
 .login-status {
@@ -76,6 +82,18 @@ hr {
 .body-title {
     margin-bottom: 3rem;
 }
+
+.form-control {
+    margin-bottom: 1rem;
+    padding: 0.6rem;
+}
+
+.btn {
+    margin-bottom: 1rem;
+    padding: 0.6rem 4rem;
+}
+
+/* Categories */
 
 /* Watchlist */
 /* .watchlist-list li {
